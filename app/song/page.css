@@ -1,0 +1,67 @@
+.song {
+  background: #ff9d5b;
+  height: 100dvh;
+
+  > img:nth-child(1) {
+    position: absolute;
+    animation: slide-in 20s infinite ease-out;
+    width: 100vw;
+    rotate: 180deg;
+    left: -100px;
+    top: 0;
+  }
+
+  .broccoli {
+    position: absolute;
+    width: 100vw;
+    bottom: 0;
+  }
+}
+
+dialog {
+  z-index: 5;
+  padding: 8px 16px;
+  background: white;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+  button {
+    margin-left: auto;
+    display: block;
+  }
+
+  p {
+    font-weight: 700;
+    font-family: var(--font-family);
+  }
+}
+
+@keyframes slide-in {
+  0% {
+    translate: 0px -400px;
+  }
+
+  50% {
+    translate: 0px 0px;
+  }
+
+  100% {
+    translate: 0px -400px;
+  }
+}
+
+@media (min-width: 420px) {
+  .song {
+    > img:nth-child(1) {
+      width: 400px;
+      left: 100px;
+    }
+
+    .broccoli {
+      position: absolute;
+      width: 400px;
+      left: 30vw;
+      bottom: 0;
+    }
+  }
+}
