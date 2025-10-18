@@ -125,6 +125,7 @@ export async function sendMail() {
           d'extrême gauche qui agiteront leurs drapeaux de wokistes à franges
           mauves.
         </p>
+        <p>Nous actons d'ors et deja la suppression de la niche fiscale 457 permettant de déclarer sa cuvette de toilette comme une œuvre d'art.</p>
         <p>Nous vous souhaitons une excellente continuation.</p>
         <br />
         <section>

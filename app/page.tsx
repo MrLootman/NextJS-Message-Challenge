@@ -32,6 +32,11 @@ export default function Home() {
         }
       }
 
+      // VERSION PROPOSEE PAR INTELLIGENCE ARTIFICIELLE :
+      // const unusedIndices = ANSWERS
+      //   .map((_, i) => i)
+      //   .filter(i => !usedIndices.has(i));
+
       // const unusedIndices = ANSWERS.reduce<number[]>((acc, _, i) => {
       //   !usedIndices.has(i) && acc.push(i);
       //   return acc;
