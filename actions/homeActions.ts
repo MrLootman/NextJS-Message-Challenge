@@ -7,7 +7,7 @@ export default async function homeAction(
   formData: FormData
 ) {
   const answer = formData.get("answer");
-  const hiddenAnswer = process.env.NEXT_PUBLIC_ANSWER;
+  const hiddenAnswer = process.env.ANSWER;
 
   const stringAnswer = answer?.toString().toLowerCase();
 
