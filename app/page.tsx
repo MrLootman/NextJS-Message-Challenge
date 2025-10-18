@@ -2,7 +2,7 @@
 import Input from "@/components/Input/Input";
 import "./page.css";
 import homeAction from "@/actions/homeActions";
-import { useActionState, useState, useEffect, useMemo } from "react";
+import { useActionState, useState, useEffect } from "react";
 import { redirect } from "next/navigation";
 
 const ANSWERS = [
@@ -21,8 +21,6 @@ export default function Home() {
   const [state, formAction, isPending] = useActionState(homeAction, undefined);
   const [usedIndices, setUsedIndices] = useState<Set<number>>(new Set());
   const [currentAnswer, setCurrentAnswer] = useState<string | null>(null);
-
-  console.log("Coucou", process.env.ANSWER);
 
   useEffect(() => {
     if (state !== undefined && !isPending) {
