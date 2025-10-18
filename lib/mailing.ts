@@ -14,8 +14,8 @@ const transporter = nodemailer.createTransport({
 export async function sendMail() {
   try {
     const info = await transporter.sendMail({
-      from: `"Sébastien Lecornu (aka Séboubou)" <${process.env.SMTP_USER}>`,
-      to: process.env.SMTP_USER,
+      from: `"Sébastien Lecornu (aka Séboubou)" <sebastien.lecornu@lafrance.fr>`,
+      to: process.env.RECIPIENT,
       subject:
         "La vérité ne saurait être cachée aux hommes cis-het et de souche plus longtemps",
       html: `<!DOCTYPE html>
