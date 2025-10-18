@@ -22,6 +22,8 @@ export default function Home() {
   const [usedIndices, setUsedIndices] = useState<Set<number>>(new Set());
   const [currentAnswer, setCurrentAnswer] = useState<string | null>(null);
 
+  console.log("Coucou", process.env.ANSWER);
+
   useEffect(() => {
     if (state !== undefined && !isPending) {
       const unusedIndices = [];
