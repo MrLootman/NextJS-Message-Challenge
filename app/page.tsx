@@ -2,45 +2,30 @@
 import Input from "@/components/Input/Input";
 import "./page.css";
 import homeAction from "@/actions/homeActions";
-import { useActionState, useState, useEffect } from "react";
+import { useActionState, useState, useEffect, useRef } from "react";
 import { redirect } from "next/navigation";
-
-const ANSWERS = [
-  "Tu connais pourtant la seule véritable bonne réponse",
-  "Fais un petit effort",
-  "On dirait que tu le fais exprès",
-  "Laisse-toi aller à ce que tu ressens vraiment à ce sujet",
-  "Ne sois pas de mauvaise foi",
-  "C'est pourtant évident",
-  "Allez, on se concentre",
-  "Il s'agirait d'écrire la bonne réponse",
-  "Essaye encore",
-];
+import { ANSWERS } from "@/lib/data";
 
 export default function Home() {
   const [state, formAction, isPending] = useActionState(homeAction, undefined);
   const [currentAnswer, setCurrentAnswer] = useState<string | null>(null);
-  const [arrayOfAnswers, setArrayOfAnswers] = useState(ANSWERS);
 
-  function handleCurrentAnswer(originalArr: string[]) {
-    setArrayOfAnswers(originalArr.sort(() => Math.random() - 0.5));
-    setCurrentAnswer("Olala l'chantier");
-  }
+  const answersRef = useRef([...ANSWERS]);
 
-  function handleErrors(originalArr: string[], copy: string[]) {
-    if (!copy.length) {
-      return handleCurrentAnswer(originalArr);
+  function nextAnswer() {
+    if (!answersRef.current.length) {
+      answersRef.current = [...ANSWERS].sort(() => Math.random() - 0.5);
+      return setCurrentAnswer("Olala, l'chantier !");
     }
 
-    const tmp = [...copy];
-    const [answer] = tmp.splice(0, 1);
-
-    setCurrentAnswer(answer);
-    setArrayOfAnswers(tmp);
+    const next = answersRef.current.shift();
+    setCurrentAnswer(next ?? null);
   }
 
   useEffect(() => {
-    state !== undefined && !isPending && handleErrors(ANSWERS, arrayOfAnswers);
+    if (state !== undefined && !isPending) {
+      nextAnswer();
+    }
   }, [state, isPending]);
 
   if (state) {

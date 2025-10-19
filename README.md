@@ -35,3 +35,63 @@
 
       // setUsedIndices((prev) => new Set(prev).add(nextIndex));
       // setCurrentAnswer(ANSWERS[nextIndex]);
+
+/// POUR LE STREAM (première version) :
+
+"use client";
+import Input from "@/components/Input/Input";
+import "./page.css";
+import homeAction from "@/actions/homeActions";
+import { useActionState, useState, useEffect, useRef } from "react";
+import { redirect } from "next/navigation";
+import { ANSWERS } from "@/lib/data";
+
+export default function Home() {
+const [state, formAction, isPending] = useActionState(homeAction, undefined);
+const [currentAnswer, setCurrentAnswer] = useState<string | null>(null);
+const [arrayOfAnswers, setArrayOfAnswers] = useState([...ANSWERS])
+
+const handleCurrentAnswer = (originalArr: string[]) => {
+setArrayOfAnswers([...ANSWERS].sort(() => Math.random() - 0.5));
+setCurrentAnswer("Olala l'chantier");
+};
+
+function handleErrors(originalArr: string[], copy: string[]) {
+if (!copy.length) {
+return handleCurrentAnswer(originalArr);
+}
+
+    const tmp = [...copy];
+    const [answer] = tmp.splice(0, 1);
+
+    setCurrentAnswer(answer);
+    setArrayOfAnswers(tmp);
+
+}
+
+useEffect(() => {
+state !== undefined &&
+!isPending &&
+handleErrors(ANSWERS, answersRef.current);
+}, [state, isPending]);
+
+if (state) {
+redirect("/song");
+}
+
+return (
+
+<main className="home">
+<form action={formAction}>
+<label htmlFor="answer">
+L'art contemporain peut-il dignement être qualifié d'art ?
+</label>
+<Input />
+<button type="submit" disabled={isPending}>
+Valider
+</button>
+{currentAnswer && <p>{currentAnswer}</p>}
+</form>
+</main>
+);
+}

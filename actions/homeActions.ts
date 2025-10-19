@@ -6,9 +6,9 @@ export default async function homeAction(
   prev: boolean | undefined,
   formData: FormData
 ) {
-  const answer = formData.get("answer");
   const hiddenAnswer = process.env.ANSWER;
 
+  const answer = formData.get("answer");
   const stringAnswer = answer?.toString().toLowerCase();
 
   if (stringAnswer !== hiddenAnswer) {
