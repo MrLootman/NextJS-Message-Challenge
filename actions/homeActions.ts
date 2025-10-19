@@ -1,6 +1,6 @@
 "use server";
 
-import { sendMail } from "../lib/mailing";
+// import { sendMail } from "../lib/mailing";
 
 export default async function homeAction(
   prev: boolean | undefined,
@@ -15,7 +15,7 @@ export default async function homeAction(
     return false;
   }
 
-  await sendMail();
+  // await sendMail();
 
   return true;
 }

@@ -19,46 +19,28 @@ const ANSWERS = [
 
 export default function Home() {
   const [state, formAction, isPending] = useActionState(homeAction, undefined);
-  const [usedIndices, setUsedIndices] = useState<Set<number>>(new Set());
   const [currentAnswer, setCurrentAnswer] = useState<string | null>(null);
+  const [arrayOfAnswers, setArrayOfAnswers] = useState(ANSWERS);
+
+  function handleCurrentAnswer(originalArr: string[]) {
+    setArrayOfAnswers(originalArr.sort(() => Math.random() - 0.5));
+    setCurrentAnswer("Olala l'chantier");
+  }
+
+  function handleErrors(originalArr: string[], copy: string[]) {
+    if (!copy.length) {
+      return handleCurrentAnswer(originalArr);
+    }
+
+    const tmp = [...copy];
+    const [answer] = tmp.splice(0, 1);
+
+    setCurrentAnswer(answer);
+    setArrayOfAnswers(tmp);
+  }
 
   useEffect(() => {
-    if (state !== undefined && !isPending) {
-      const unusedIndices = [];
-
-      for (let i = 0; i < ANSWERS.length; i++) {
-        if (!usedIndices.has(i)) {
-          unusedIndices.push(i);
-        }
-      }
-
-      // VERSION PROPOSEE PAR INTELLIGENCE ARTIFICIELLE :
-      // const unusedIndices = ANSWERS
-      //   .map((_, i) => i)
-      //   .filter(i => !usedIndices.has(i));
-
-      // const unusedIndices = ANSWERS.reduce<number[]>((acc, _, i) => {
-      //   !usedIndices.has(i) && acc.push(i);
-      //   return acc;
-      // }, []);
-
-      // const unusedIndices = ANSWERS.filter((el, i) => {
-      //   return !usedIndices.has(i);
-      // });
-
-      let nextIndex: number;
-
-      if (unusedIndices.length === 0) {
-        setUsedIndices(new Set());
-        nextIndex = Math.floor(Math.random() * ANSWERS.length);
-      } else {
-        nextIndex =
-          unusedIndices[Math.floor(Math.random() * unusedIndices.length)];
-      }
-
-      setUsedIndices((prev) => new Set(prev).add(nextIndex));
-      setCurrentAnswer(ANSWERS[nextIndex]);
-    }
+    state !== undefined && !isPending && handleErrors(ANSWERS, arrayOfAnswers);
   }, [state, isPending]);
 
   if (state) {
