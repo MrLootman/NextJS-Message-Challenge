@@ -1,48 +1,28 @@
 "use client";
+
 import Input from "@/components/Input/Input";
 import "./page.css";
-import homeAction from "@/actions/homeActions";
-import { useActionState, useState, useEffect, useRef } from "react";
-import { redirect } from "next/navigation";
-import { ANSWERS } from "@/lib/data";
+import action from "@/actions/homeActions";
+import { useActionState } from "react";
+// import { ANSWERS } from "@/lib/data";
 
 export default function Home() {
-  const [state, formAction, isPending] = useActionState(homeAction, undefined);
-  const [currentAnswer, setCurrentAnswer] = useState<string | null>(null);
-
-  const answersRef = useRef([...ANSWERS]);
-
-  function nextAnswer() {
-    if (!answersRef.current.length) {
-      answersRef.current = [...ANSWERS].sort(() => Math.random() - 0.5);
-      return setCurrentAnswer("Olala, l'chantier !");
-    }
-
-    const next = answersRef.current.shift();
-    setCurrentAnswer(next ?? null);
-  }
-
-  useEffect(() => {
-    if (state !== undefined && !isPending) {
-      nextAnswer();
-    }
-  }, [state, isPending]);
+  const [state, formAction, isPending] = useActionState(action, undefined);
 
   if (state) {
-    redirect("/song");
+    // do something
   }
 
   return (
     <main className="home">
       <form action={formAction}>
         <label htmlFor="answer">
-          L'art contemporain peut-il dignement être qualifié d'art ?
+          L'art contemporain est-il une niche fiscale ?
         </label>
         <Input />
         <button type="submit" disabled={isPending}>
           Valider
         </button>
-        {currentAnswer && <p>{currentAnswer}</p>}
       </form>
     </main>
   );

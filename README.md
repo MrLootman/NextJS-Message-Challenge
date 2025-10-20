@@ -1,97 +1,47 @@
-### That is the question
+# 📘 NextJS – Algorithm challenge
 
-      // MA VERSION
-      // const unusedIndices = [];
+## 🚀 Installation et lancement du projet
 
-      // for (let i = 0; i < ANSWERS.length; i++) {
-      //   if (!usedIndices.has(i)) {
-      //     unusedIndices.push(i);
-      //   }
-      // }
+### 1. Cloner le projet
 
-      // VERSIONS PROPOSEES PAR INTELLIGENCE ARTIFICIELLE :
-      // const unusedIndices = ANSWERS
-      //   .map((_, i) => i)
-      //   .filter(i => !usedIndices.has(i));
+```bash
+git clone git@github.com:MrLootman/NextChallenge-Answers
+```
 
-      // const unusedIndices = ANSWERS.reduce<number[]>((acc, _, i) => {
-      //   !usedIndices.has(i) && acc.push(i);
-      //   return acc;
-      // }, []);
+### 2. Se rendre dans le répertoire
 
-      // const unusedIndices = ANSWERS.filter((el, i) => {
-      //   return !usedIndices.has(i);
-      // });
+```bash
+cd NextChallenge-Answers
+```
 
-      // let nextIndex: number;
+### 3. Installer les dépendances
 
-      // if (unusedIndices.length === 0) {
-      //   setUsedIndices(new Set());
-      //   nextIndex = Math.floor(Math.random() * ANSWERS.length);
-      // } else {
-      //   nextIndex =
-      //     unusedIndices[Math.floor(Math.random() * unusedIndices.length)];
-      // }
+```bash
+npm install
+```
 
-      // setUsedIndices((prev) => new Set(prev).add(nextIndex));
-      // setCurrentAnswer(ANSWERS[nextIndex]);
+### 4. Lancer le projet en mode développement
 
-/// POUR LE STREAM (première version) :
+```bash
+npm run dev
+```
 
-"use client";
-import Input from "@/components/Input/Input";
-import "./page.css";
-import homeAction from "@/actions/homeActions";
-import { useActionState, useState, useEffect, useRef } from "react";
-import { redirect } from "next/navigation";
-import { ANSWERS } from "@/lib/data";
+Ensuite, ouvrez le navigateur à l’adresse indiquée dans le terminal (par défaut : http://localhost:3000/).
 
-export default function Home() {
-const [state, formAction, isPending] = useActionState(homeAction, undefined);
-const [currentAnswer, setCurrentAnswer] = useState<string | null>(null);
-const [arrayOfAnswers, setArrayOfAnswers] = useState([...ANSWERS])
+---
 
-const handleCurrentAnswer = (originalArr: string[]) => {
-setArrayOfAnswers([...ANSWERS].sort(() => Math.random() - 0.5));
-setCurrentAnswer("Olala l'chantier");
-};
+## 📖 Description de l'exercice
 
-function handleErrors(originalArr: string[], copy: string[]) {
-if (!copy.length) {
-return handleCurrentAnswer(originalArr);
-}
+Dans ce projet, le composant `Home` contient un formulaire, lui-même contenant un input et un bouton.
 
-    const tmp = [...copy];
-    const [answer] = tmp.splice(0, 1);
+Côté backend, le fichier `/actions/homeActions.ts` contient la logique de traitement de ce que l'utilisateur a renseigné. La logique est très simple : Si la réponse n'est pas correcte, cela renvoie `false`. Si la réponse est celle attendue, cela renvoie `true`.
 
-    setCurrentAnswer(answer);
-    setArrayOfAnswers(tmp);
+Ton objectif se situe côté client, dans le composant `Home`.
 
-}
+Tu vas devoir :
 
-useEffect(() => {
-state !== undefined &&
-!isPending &&
-handleErrors(ANSWERS, answersRef.current);
-}, [state, isPending]);
+1. Faire apparaître un message sous le formulaire lorsqu'une mauvaise réponse a été renseignée par l'utilisateur. Pour cela, tu peux décommenter la ligne 7, et ainsi bénéficier d'un tableau de messages en cas d'échec.
 
-if (state) {
-redirect("/song");
-}
+2. Une même réponse ne doit **jamais** apparaître deux fois consécutivement.
 
-return (
-
-<main className="home">
-<form action={formAction}>
-<label htmlFor="answer">
-L'art contemporain peut-il dignement être qualifié d'art ?
-</label>
-<Input />
-<button type="submit" disabled={isPending}>
-Valider
-</button>
-{currentAnswer && <p>{currentAnswer}</p>}
-</form>
-</main>
-);
-}
+3. **Bonus** : Les réponses doivent être mélangées aléatoirement.

@@ -1,21 +1,16 @@
 "use server";
 
-// import { sendMail } from "../lib/mailing";
-
-export default async function homeAction(
+export default async function action(
   prev: boolean | undefined,
   formData: FormData
 ) {
-  const hiddenAnswer = process.env.ANSWER;
+  const hiddenAnswer = "oui"; // Pourrait venir d'une variable d'environnement ou d'une database
 
   const answer = formData.get("answer");
-  const stringAnswer = answer?.toString().toLowerCase();
 
-  if (stringAnswer !== hiddenAnswer) {
+  if (answer?.toString().toLowerCase() !== hiddenAnswer) {
     return false;
   }
-
-  // await sendMail();
 
   return true;
 }
